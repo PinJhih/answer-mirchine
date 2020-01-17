@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 #include <LiquidCrystal_I2C.h> 
 #include <Wire.h>
+#include <math.h>
 
 #define BTN_NEXT 48
 #define BTN_NEW 46
@@ -16,6 +17,15 @@ SoftwareSerial team8(58,59);
 SoftwareSerial team9(60,61);
 
 LiquidCrystal_I2C lcd(0x27,20,4);
+
+int strToInt(String inPut){
+  int sec=0;
+  for(int i=0;i!=4;i++){
+    sec+=(inPut[i]-'0')*pow(10,4-i);
+  }
+  return sec;
+}
+
 
 void setup() {
   Serial.begin(9600);
