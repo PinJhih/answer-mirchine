@@ -5,6 +5,7 @@
 
 #define BTN_NEXT 48
 #define BTN_NEW 46
+#define MAX 9
 
 SoftwareSerial team1(2,3);
 SoftwareSerial team2(4,5);
@@ -18,12 +19,29 @@ SoftwareSerial team9(60,61);
 
 LiquidCrystal_I2C lcd(0x27,20,4);
 
-int strToInt(String inPut){
-  int sec=0;
-  for(int i=0;i!=4;i++){
+typedef struct Data{
+    short Tema;
+    short Time;
+  }data;
+
+data arr[9];
+
+short strToInt(String inPut){
+  short sec=0;
+  for(short i=0;i!=4;i++)
     sec+=(inPut[i]-'0')*pow(10,4-i);
-  }
+  
   return sec;
+}
+
+void sort(){
+  for(short i=0;i!=MAX-1;i++)
+    for(short j=i+1;j!=MAX;j++)
+      if(arr[i].Time>arr[j].Time){
+        data d=arr[i];
+        arr[i]=arr[j];
+        arr[j]=d;
+      }
 }
 
 
